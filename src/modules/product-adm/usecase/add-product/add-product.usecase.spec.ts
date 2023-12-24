@@ -2,6 +2,7 @@
 
 /* Estamos criando um mock do repositório com o Jest. */
 import {AddProductInputDto} from "./add-product.dto";
+import AddProductUsecase from "./add-product.usecase";
 
 const MockRepository = () => {
     return {
@@ -13,7 +14,7 @@ const MockRepository = () => {
 describe("Add product usecase unit test", () => {
 
     it("should add a product", async () => {
-        const productRepository = new ProductRepository();
+        const productRepository = MockRepository();
 
         const input: AddProductInputDto = {
             name: "Product 01",
@@ -22,7 +23,14 @@ describe("Add product usecase unit test", () => {
             stock: 10
         }
 
-        const usecase = new AddProductUseCase();
-        usecase.execute(input);
+        const usecase = new AddProductUsecase(productRepository);
+        const result = await usecase.execute(input);
+
+        expect(productRepository.add).toHaveBeenCalled();
+        expect(result.id).toBeDefined();
+        expect(result.name).toBe(input.name);
+        expect(result.description).toBe(input.description);
+        expect(result.purchasePrice).toBe(input.purchasePrice);
+        expect(result.stock).toBe(input.stock);
     });
 })
