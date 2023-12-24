@@ -1,9 +1,9 @@
 import BaseEntity from "../../@shared/domain/entity/base.entity";
 import AggregateRoot from "../../@shared/domain/entity/aggregate-root.interface";
-import {number, string} from "yup";
+import Id from "../../@shared/domain/entity/value-object/id.value-object";
 
 type ProductProps = {
-    id?: string;
+    id?: Id;
     name: string;
     description: string;
     purchasePrice: number;
