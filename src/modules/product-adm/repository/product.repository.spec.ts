@@ -44,12 +44,42 @@ describe("Product repository integration test", () => {
 
         const productFromDatabase = await ProductModel.findOne({where: {id: product.id.id}});
 
-        expect(product.id.id).toEqual(productFromDatabase.getDataValue('id'));
-        expect(product.name).toEqual(productFromDatabase.getDataValue('name'));
-        expect(product.description).toEqual(productFromDatabase.getDataValue('description'));
-        expect(product.purchasePrice).toEqual(productFromDatabase.getDataValue('purchasePrice'));
-        expect(product.stock).toEqual(productFromDatabase.getDataValue('stock'));
-        expect(product.createdAt.getTime()).toEqual(productFromDatabase.getDataValue('createdAt').getTime());
-        expect(product.updatedAt.getTime()).toEqual(productFromDatabase.getDataValue('updatedAt').getTime());
+        expect(product.id.id).toEqual(productFromDatabase.id);
+        expect(product.name).toEqual(productFromDatabase.name);
+        expect(product.description).toEqual(productFromDatabase.description);
+        expect(product.purchasePrice).toEqual(productFromDatabase.purchasePrice);
+        expect(product.stock).toEqual(productFromDatabase.stock);
+        expect(product.createdAt.getTime()).toEqual(productFromDatabase.createdAt.getTime());
+        expect(product.updatedAt.getTime()).toEqual(productFromDatabase.updatedAt.getTime());
+    })
+
+    it("should find a product", async () => {
+
+        const productRepository = new ProductRepository();
+
+        const createdAt = new Date();
+        const updatedAt = new Date();
+
+        await ProductModel.create({
+            id: "1",
+            name: "Product 01",
+            description: "Product 01 description",
+            purchasePrice: 100,
+            stock: 10,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        })
+
+        const product = await productRepository.find("1");
+
+        const marginOfError = 100; // Margem de erro pois uma diferença de 2~3 milissegundos pode ocorrer e falhar o teste.
+
+        expect(product.id.id).toEqual("1");
+        expect(product.name).toEqual("Product 01");
+        expect(product.description).toEqual("Product 01 description");
+        expect(product.purchasePrice).toEqual(100);
+        expect(product.stock).toEqual(10);
+        expect(Math.abs(product.createdAt.getTime() - createdAt.getTime())).toBeLessThanOrEqual(marginOfError);
+        expect(Math.abs(product.updatedAt.getTime() - updatedAt.getTime())).toBeLessThanOrEqual(marginOfError);
     })
 })
