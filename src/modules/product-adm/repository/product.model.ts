@@ -1,8 +1,8 @@
 import {Column, Model, PrimaryKey, Table} from "sequelize-typescript";
 
 @Table({
-    tableName: 'product',
-    timestamps: false // Não queremos os campos createdAt e updatedAt
+    tableName: 'products',
+    timestamps: false // Não queremos os campos createdAt e updatedAt sendo gerados pelo Sequelize.
 })
 export class ProductModel extends Model {
 
