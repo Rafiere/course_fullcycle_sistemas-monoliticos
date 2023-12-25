@@ -40,4 +40,37 @@ describe("Store catalog facade tests", () => {
         expect(result.description).toBe("Product 01 description");
         expect(result.salesPrice).toBe(100);
     })
+
+    it("should find all products", async () => {
+
+        await ProductModel.create({
+            id: "1",
+            name: "Product 01",
+            description: "Product 01 description",
+            salesPrice: 100,
+        })
+
+        await ProductModel.create({
+            id: "2",
+            name: "Product 02",
+            description: "Product 02 description",
+            salesPrice: 200,
+        })
+
+        const facade = StoreCatalogFacadeFactory.create();
+
+        const result = await facade.findAll();
+
+        expect(result.products.length).toBe(2);
+
+        expect(result[0].id).toBe("1");
+        expect(result[0].name).toBe("Product 01");
+        expect(result[0].description).toBe("Product 01 description");
+        expect(result[0].salesPrice).toBe(100);
+
+        expect(result[1].id).toBe("2");
+        expect(result[1].name).toBe("Product 02");
+        expect(result[1].description).toBe("Product 02 description");
+        expect(result[1].salesPrice).toBe(200);
+    })
 })
