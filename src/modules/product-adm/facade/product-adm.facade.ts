@@ -1,8 +1,14 @@
-import ProductAdmFacadeInterface, { AddProductFacadeInputDto, CheckStockFacadeInputDto, CheckStockFacadeOutputDto } from "./product-adm.facade.interface";
+import ProductAdmFacadeInterface, {
+    AddProductFacadeInputDto,
+    CheckStockFacadeInputDto,
+    CheckStockFacadeOutputDto,
+    FindProductFacadeInputDto, FindProductFacadeOutputDto
+} from "./product-adm.facade.interface";
 import UseCaseInterface from "../../@shared/domain/entity/use-case/use-case.interface";
 
 export interface UseCasesProps {
     addProductUseCase: UseCaseInterface;
+    findProductUseCase: UseCaseInterface;
     checkStockUseCase: UseCaseInterface;
 }
 
@@ -17,15 +23,21 @@ export default class ProductAdmFacade implements ProductAdmFacadeInterface {
     * nenhum problema. */
 
     private addProductUseCase: UseCaseInterface;
+    private findProductUseCase: UseCaseInterface;
     private checkStockUseCase: UseCaseInterface;
 
     constructor(useCasesProps: UseCasesProps) {
         this.addProductUseCase = useCasesProps.addProductUseCase;
+        this.findProductUseCase = useCasesProps.findProductUseCase;
         this.checkStockUseCase = useCasesProps.checkStockUseCase;
     }
 
     addProduct(input: AddProductFacadeInputDto): Promise<void> {
         return this.addProductUseCase.execute(input);
+    }
+
+    findProduct(input: FindProductFacadeInputDto): Promise<FindProductFacadeOutputDto> {
+        return this.findProductUseCase.execute(input);
     }
 
     checkStock(input: CheckStockFacadeInputDto): Promise<CheckStockFacadeOutputDto> {

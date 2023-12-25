@@ -2,8 +2,9 @@ import {AddProductInputDto, AddProductOutputDto} from "./add-product.dto";
 import Id from "../../../@shared/domain/entity/value-object/id.value-object";
 import Product from "../../domain/product.entity";
 import ProductGateway from "../../gateway/product.gateway";
+import UseCaseInterface from "../../../@shared/domain/entity/use-case/use-case.interface";
 
-export default class AddProductUsecase {
+export default class AddProductUsecase implements UseCaseInterface {
 
     private _productRepository: ProductGateway;
 
