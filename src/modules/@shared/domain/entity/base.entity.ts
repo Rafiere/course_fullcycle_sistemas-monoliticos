@@ -25,8 +25,4 @@ export default class BaseEntity {
     get updatedAt(): Date {
         return this._updatedAt;
     }
-
-    set updatedAt(value: Date) {
-        this._updatedAt = value;
-    }
 }
