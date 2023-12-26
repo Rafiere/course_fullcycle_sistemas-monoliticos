@@ -63,14 +63,14 @@ describe("Store catalog facade tests", () => {
 
         expect(result.products.length).toBe(2);
 
-        expect(result[0].id).toBe("1");
-        expect(result[0].name).toBe("Product 01");
-        expect(result[0].description).toBe("Product 01 description");
-        expect(result[0].salesPrice).toBe(100);
+        expect(result.products[0].id).toBe("1");
+        expect(result.products[0].name).toBe("Product 01");
+        expect(result.products[0].description).toBe("Product 01 description");
+        expect(result.products[0].salesPrice).toBe(100);
 
-        expect(result[1].id).toBe("2");
-        expect(result[1].name).toBe("Product 02");
-        expect(result[1].description).toBe("Product 02 description");
-        expect(result[1].salesPrice).toBe(200);
+        expect(result.products[1].id).toBe("2");
+        expect(result.products[1].name).toBe("Product 02");
+        expect(result.products[1].description).toBe("Product 02 description");
+        expect(result.products[1].salesPrice).toBe(200);
     })
 })
