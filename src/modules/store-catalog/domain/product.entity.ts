@@ -7,16 +7,18 @@ type ProductProps = {
     name: string;
     description: string;
     salesPrice: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export default class Product extends BaseEntity implements AggregateRoot {
 
-    private _name: string;
-    private _description: string;
-    private _salesPrice: number; //O produto será o mesmo, mas o produto terá um preço de venda e de compra.
+    private readonly _name: string;
+    private readonly _description: string;
+    private readonly _salesPrice: number; //O produto será o mesmo, mas o produto terá um preço de venda e de compra.
 
     constructor(props: ProductProps) {
-        super(props.id);
+        super(props.id, props.createdAt, props.updatedAt);
         this._name = props.name;
         this._description = props.description;
         this._salesPrice = props.salesPrice;
