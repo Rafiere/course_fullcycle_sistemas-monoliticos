@@ -21,7 +21,7 @@ export default class Transaction extends BaseEntity implements AggregateRoot {
         super(new Id(props.id), props.createdAt, props.updatedAt);
         this._amount = props.amount;
         this._orderId = props.orderId;
-        this._status = props.status;
+        this._status = props.status || "pending";
     }
 
     validate(): void {
