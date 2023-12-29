@@ -3,8 +3,10 @@ import {PlaceOrderInputDto, PlaceOrderOutputDto} from "./place-order.dto";
 import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
 import ProductAdmFacadeInterface from "../../../product-adm/facade/product-adm.facade.interface";
 import StoreCatalogFacadeInterface from "../../../store-catalog/facade/store-catalog.facade.interface";
-import Product from "../../../store-catalog/domain/product.entity";
 import Id from "../../../@shared/domain/entity/value-object/id.value-object";
+import Client from "../../domain/client.entity";
+import Order from "../../domain/order.entity";
+import Product from "../../domain/product.entity";
 
 /* Esse caso de uso utilizará as facades de todos os outros módulos. */
 
@@ -36,23 +38,32 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
             throw new Error("Client not found");
         }
 
-        //Validará se todos os produtos são válidos.
+        //Validar se todos os produtos são válidos.
 
         await this.validateProducts(input);
 
         //Recuperar os produtos
 
+        const products: Product[] = await Promise.all(
+            input.products.map(async product => await this.getProduct(product.productId))
+        )
+
         //Criar o objeto do "Client".
+
+        const orderClient = new Client({
+            id: new Id(input.clientId),
+            name: client.name,
+            email: client.email,
+            address: client.address
+        })
 
         //Criar o objeto da ordem de serviço, onde utilizaremos o client e os products.
 
-        //Processar o pagamento.
-
-        //Se o pagamento for aprovado, geraremos um "invoice".
-            //Mudar o status da ordem para "approved".
-            //Retornar o DTO com o resultado.
-
-        return null;
+        const order = new Order({
+            id: new Id(),
+            client: orderClient,
+            products,
+        })
     }
 
     private async validateProducts(input: PlaceOrderInputDto): Promise<void> {
